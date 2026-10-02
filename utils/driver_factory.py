@@ -1,23 +1,103 @@
+# import os
+#
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options as ChromeOptions
+# from selenium.webdriver.chrome.service import Service as ChromeService
+# from selenium.webdriver.firefox.options import Options as FirefoxOptions
+# from selenium.webdriver.firefox.service import Service as FirefoxService
+#
+#
+# # # ChromeDriver available on this Windows machine// good and working..
+# CHROMEDRIVER_PATH = (
+#     r"C:\Users\moham\.cache\selenium\chromedriver\win64"
+#     r"\152.0.7977.82\chromedriver.exe"
+# )
+#
+# # GeckoDriver available on this Windows machine
+# GECKODRIVER_PATH = (
+#     r"C:\Users\moham\.cache\selenium\geckodriver\win64"
+#     r"\0.37.1\geckodriver.exe"
+# )
+#
+#
+# def create_driver(browser: str):
+#     browser = browser.lower()
+#     print(f"WebDriverFactory - Browser: {browser}")
+#
+#     # =========================
+#     # CHROME
+#     # =========================
+#     if browser == "chrome":
+#         options = ChromeOptions()
+#
+#         # Headless mode for Jenkins / GitHub Actions / CI
+#         if (
+#             os.getenv("GITHUB_ACTIONS", "").lower() == "true"
+#             or os.getenv("CI")
+#             or os.getenv("JENKINS_HOME")
+#         ):
+#             options.add_argument("--headless=new")
+#             options.add_argument("--no-sandbox")
+#             options.add_argument("--disable-dev-shm-usage")
+#
+#         # Use the Windows driver only when running on Windows.
+#         # GitHub Actions runs on Linux, so Selenium Manager handles
+#         # the driver there.
+#         if os.name == "nt":
+#             print(f"ChromeDriver: {CHROMEDRIVER_PATH}")
+#             service = ChromeService(CHROMEDRIVER_PATH)
+#
+#             return webdriver.Chrome(
+#                 service=service,
+#                 options=options,
+#             )
+#
+#         # Linux / GitHub Actions
+#         print("ChromeDriver: Selenium Manager")
+#
+#         return webdriver.Chrome(
+#             options=options,
+#         )
+#
+#     # =========================
+#     # FIREFOX
+#     # =========================
+#     if browser == "firefox":
+#         options = FirefoxOptions()
+#
+#         # Headless mode for Jenkins / CI
+#         if os.getenv("CI") or os.getenv("JENKINS_HOME"):
+#             options.add_argument("-headless")
+#
+#         # Use the Windows driver only when running on Windows.
+#         if os.name == "nt":
+#             print(f"GeckoDriver: {GECKODRIVER_PATH}")
+#             service = FirefoxService(GECKODRIVER_PATH)
+#
+#             return webdriver.Firefox(
+#                 service=service,
+#                 options=options,
+#             )
+#
+#         # Linux / GitHub Actions
+#         print("GeckoDriver: Selenium Manager")
+#
+#         return webdriver.Firefox(
+#             options=options,
+#         )
+#
+#     # =========================
+#     # UNSUPPORTED BROWSER
+#     # =========================
+#     raise ValueError(f"Unsupported browser: {browser}")
+
+
+## starting non hard coded driver
 import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.firefox.service import Service as FirefoxService
-
-
-# ChromeDriver available on this Windows machine
-CHROMEDRIVER_PATH = (
-    r"C:\Users\moham\.cache\selenium\chromedriver\win64"
-    r"\152.0.7977.82\chromedriver.exe"
-)
-
-# GeckoDriver available on this Windows machine
-GECKODRIVER_PATH = (
-    r"C:\Users\moham\.cache\selenium\geckodriver\win64"
-    r"\0.37.1\geckodriver.exe"
-)
 
 
 def create_driver(browser: str):
@@ -40,19 +120,7 @@ def create_driver(browser: str):
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
 
-        # Use the Windows driver only when running on Windows.
-        # GitHub Actions runs on Linux, so Selenium Manager handles
-        # the driver there.
-        if os.name == "nt":
-            print(f"ChromeDriver: {CHROMEDRIVER_PATH}")
-            service = ChromeService(CHROMEDRIVER_PATH)
-
-            return webdriver.Chrome(
-                service=service,
-                options=options,
-            )
-
-        # Linux / GitHub Actions
+        # Selenium Manager automatically handles ChromeDriver
         print("ChromeDriver: Selenium Manager")
 
         return webdriver.Chrome(
@@ -69,17 +137,7 @@ def create_driver(browser: str):
         if os.getenv("CI") or os.getenv("JENKINS_HOME"):
             options.add_argument("-headless")
 
-        # Use the Windows driver only when running on Windows.
-        if os.name == "nt":
-            print(f"GeckoDriver: {GECKODRIVER_PATH}")
-            service = FirefoxService(GECKODRIVER_PATH)
-
-            return webdriver.Firefox(
-                service=service,
-                options=options,
-            )
-
-        # Linux / GitHub Actions
+        # Selenium Manager automatically handles GeckoDriver
         print("GeckoDriver: Selenium Manager")
 
         return webdriver.Firefox(

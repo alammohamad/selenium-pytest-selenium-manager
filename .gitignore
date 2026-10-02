@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 reports/
 conftest_backup.py
+.idea/
