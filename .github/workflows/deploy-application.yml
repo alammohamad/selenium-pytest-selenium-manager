@@ -11,8 +11,12 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
       - name: Build application
-        run: |
-          echo "Building application..."
-          echo "This is our practice build."
-          echo "JAR would be created here."
+        run: mvn clean package
