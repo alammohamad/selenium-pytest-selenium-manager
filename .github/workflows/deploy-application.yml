@@ -1,0 +1,18 @@
+name: Deploy Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Build application
+        run: |
+          echo "Building application..."
+          echo "This is our practice build."
+          echo "JAR would be created here."
