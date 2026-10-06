@@ -26,3 +26,23 @@ jobs:
         with:
           name: myapp
           path: target/myapp-1.0.0.jar
+
+  deploy-qa:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: myapp
+
+      - name: Deploy to QA
+        run: |
+          echo "========================================"
+          echo "Deploying application to QA"
+          echo "========================================"
+          echo "Application: myapp"
+          echo "Artifact: myapp-1.0.0.jar"
+          echo "Environment: QA"
+          echo "Deployment successful!"
