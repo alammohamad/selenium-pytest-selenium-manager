@@ -46,3 +46,25 @@ jobs:
           echo "Artifact: myapp-1.0.0.jar"
           echo "Environment: QA"
           echo "Deployment successful!"
+          
+
+  deploy-prod:
+    needs: deploy-qa
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: myapp
+
+      - name: Deploy to PROD
+        run: |
+          echo "========================================"
+          echo "Deploying application to PROD"
+          echo "========================================"
+          echo "Application: myapp"
+          echo "Artifact: myapp-1.0.0.jar"
+          echo "Environment: PROD"
+          echo "Deployment successful!"
